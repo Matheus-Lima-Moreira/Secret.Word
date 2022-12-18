@@ -35,21 +35,33 @@ const Game = ({ verifyLetter, pickedWord, pickedCategory,
       <div className="letterContainer">
         <p>Tente adivinhar uma letra da palavra:</p>
         <form onSubmit={handleSubmit}>
-          <input type="text"
-            name="letter"
-            maxLength="1"
-            onChange={(e) => setLetter(e.target.value)}
-            value={letter}
-            ref={letterInputRef}
-            required
-          />
-          <button>Jogar!</button>
+          <div className="guessContainer">
+            <input type="text"
+              name="letter"
+              maxLength="1"
+              onChange={(e) => setLetter(e.target.value)}
+              value={letter}
+              ref={letterInputRef}
+              required
+            />
+            <button>Jogar!</button>
+          </div>
         </form>
       </div>
       <div className="wrongLettersContainer">
         <p>Letras já utilizadas:</p>
         {wrongLetters.map((letter, i) => {
-          return <span key={i}>{letter}</span>
+          const lastLetter = i + 1 === wrongLetters.length;
+
+          let formattedVlr = '';
+
+          if (wrongLetters.length === 1) {
+            formattedVlr = letter;
+          } else {
+            formattedVlr = lastLetter ? letter : letter + ', ';
+          }
+
+          return <span key={i}>{formattedVlr}</span>
         })}
       </div>
     </div >
